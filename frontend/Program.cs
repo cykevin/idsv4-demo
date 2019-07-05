@@ -30,13 +30,15 @@ namespace frontend
             {
                 Console.WriteLine(tokenResponse.Error);
             }
-            Console.WriteLine(tokenResponse.Json);
+            else
+            {
+                Console.WriteLine(tokenResponse.Json);
+                client.SetBearerToken(tokenResponse.AccessToken);
+                var features = client.GetAsync("http://localhost:5080/feature/index").GetAwaiter().GetResult()
+                    .Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
-            client.SetBearerToken(tokenResponse.AccessToken);
-            var features = client.GetAsync("http://localhost:5080/feature/index").GetAwaiter().GetResult()
-                .Content.ReadAsStringAsync().GetAwaiter().GetResult();
-
-            Console.WriteLine(features);
+                Console.WriteLine(features);
+            }
 
             Console.ReadLine();
         }

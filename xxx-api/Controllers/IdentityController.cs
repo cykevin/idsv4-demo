@@ -13,12 +13,7 @@ namespace xxx_api.Controllers
     {
         public IActionResult Index()
         {
-            return new JsonResult(new
-            {
-                AuthenticationType = User.Identity.AuthenticationType,
-                IsAuthenticated = User.Identity.IsAuthenticated,
-                Name = User.Identity.Name
-            });
+            return new JsonResult(from c in User.Claims select new { c.Type, c.Value });
         }
     }
 }
